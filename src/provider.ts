@@ -31,7 +31,7 @@ function createLlamaCpp(): LlamaCppProvider {
  * @example
  * ```typescript
  * import { generateText, tool } from "ai";
- * import { llamaCpp } from "@mkwon/llama-cpp-provider";
+ * import { llamaCpp } from "@enagic/llama-cpp-provider";
  * import { z } from "zod";
  *
  * const model = llamaCpp({ modelPath: "./models/qwen3-8b.Q4_K_M.gguf" });

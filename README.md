@@ -148,6 +148,10 @@ await embeddingModel.dispose();
 - Forced tool choice bypasses the model's native tool-call syntax (the response is a
   grammar-constrained JSON object instead); prefer `toolChoice: "auto"` for best
   results.
+- node-llama-cpp 3.19 can segfault during native Metal teardown *after* the process has
+  finished all work (observed on macOS even in a minimal upstream-only script). All
+  output is flushed before it happens and long-running processes are unaffected, but
+  short CLI scripts may exit 139 instead of 0.
 
 ## Testing
 

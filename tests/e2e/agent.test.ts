@@ -31,7 +31,8 @@ describe.skipIf(!hasModel)("e2e agent smoke", () => {
       prompt: "Reply with exactly the word: pong",
     });
     expect(result.text.toLowerCase()).toContain("pong");
-    expect(result.usage.outputTokens?.total).toBeGreaterThan(0);
+    expect(result.usage.outputTokens).toBeGreaterThan(0);
+    expect(result.usage.inputTokens).toBeGreaterThan(0);
   });
 
   it("runs a tool-calling agent loop", async () => {

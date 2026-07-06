@@ -248,15 +248,18 @@ export class LlamaCppLanguageModel implements LanguageModelV4 {
         }
         events.onText?.(text);
       },
-      // Only reuse the previous evaluation's context window when the incoming request
-      // actually continues the conversation this slot last served (all prior items
-      // match, allowing the trailing in-progress model item to differ). Passing it for
-      // an unrelated conversation makes LlamaChat continue the old context.
+      // Only reuse the previous evaluation's context window when the slot's entire
+      // prior history is an exact prefix of the incoming request (plain multi-turn
+      // continuation). A tool-loop step mutates the trailing model item (the function
+      // call gains its result), and passing the stale window then would hide the tool
+      // result from the model, making it re-issue the call forever. Skipping the
+      // window is cheap: the sequence still reuses the KV cache for the unchanged
+      // token prefix.
       lastEvaluationContextWindow:
         slot.lastContextWindow != null &&
         slot.chatHistory.length > 0 &&
         sharedPrefixLength(slot.chatHistory, prepared.history) >=
-          slot.chatHistory.length - 1
+          slot.chatHistory.length
           ? { history: slot.lastContextWindow }
           : undefined,
     };

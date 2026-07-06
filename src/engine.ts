@@ -102,6 +102,7 @@ export async function createEngine(config: LlamaCppProviderConfig): Promise<Engi
       await slots.dispose();
       await context.dispose();
       await model.dispose();
+      await llama.dispose();
     },
   };
 }

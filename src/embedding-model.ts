@@ -63,6 +63,7 @@ export class LlamaCppEmbeddingModel implements EmbeddingModelV4 {
       this.enginePromise = null;
       await engine.context.dispose();
       await engine.model.dispose();
+      await engine.llama.dispose();
     }
   }
 
