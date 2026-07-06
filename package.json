@@ -1,0 +1,50 @@
+{
+  "name": "@enagic/llama-cpp-provider",
+  "version": "0.1.0",
+  "description": "Vercel AI SDK provider for local GGUF models via node-llama-cpp, with grammar-constrained (sampler-enforced) tool calling",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run tests/unit",
+    "test:e2e": "vitest run tests/e2e",
+    "smoke": "tsx scripts/smoke.ts"
+  },
+  "keywords": [
+    "ai",
+    "ai-sdk",
+    "llama",
+    "llama.cpp",
+    "node-llama-cpp",
+    "gguf",
+    "tool-calling",
+    "language-model"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@ai-sdk/provider": "4.0.0",
+    "node-llama-cpp": "^3.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ai": "7.0.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0",
+    "vitest": "^4.0.16",
+    "zod": "^4.3.5"
+  }
+}
