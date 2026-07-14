@@ -13,9 +13,9 @@ export interface LlamaCppProviderConfig {
   /**
    * Number of model layers to offload to the GPU.
    *
-   * Defaults to automatic (offload as many as fit). Use 0 to disable GPU offload.
+   * Defaults to 999 (offload all layers to GPU). Set to 0 to disable GPU offload.
    */
-  gpuLayers?: number | "auto";
+  gpuLayers?: number;
   /**
    * Number of generations that can run concurrently (context sequences).
    *

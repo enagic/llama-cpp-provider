@@ -79,7 +79,7 @@ export async function createEngine(config: LlamaCppProviderConfig): Promise<Engi
 
   const model = await llama.loadModel({
     modelPath: config.modelPath,
-    gpuLayers: config.gpuLayers === "auto" ? undefined : config.gpuLayers,
+    gpuLayers: config.gpuLayers ?? 999,
   });
 
   const chatWrapper = resolveWrapper(model, config.chatWrapper);

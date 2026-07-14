@@ -43,7 +43,7 @@ export class LlamaCppEmbeddingModel implements EmbeddingModelV4 {
         });
         const model = await llama.loadModel({
           modelPath: config.modelPath,
-          gpuLayers: config.gpuLayers === "auto" ? undefined : config.gpuLayers,
+          gpuLayers: config.gpuLayers ?? 999,
         });
         const context = await model.createEmbeddingContext({
           contextSize: config.contextSize,

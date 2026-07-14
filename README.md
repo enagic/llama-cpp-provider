@@ -98,7 +98,7 @@ await model.dispose(); // release native GPU/CPU resources
 const model = llamaCpp({
   modelPath: "./models/model.gguf", // required
   contextSize: 8192,                // default: auto-fit to available memory
-  gpuLayers: "auto",                // default: offload as many as fit; 0 disables
+  gpuLayers: 999,                   // default: offload all layers; 0 disables
   parallel: 1,                      // concurrent generation slots
   chatWrapper: "auto",              // or a node-llama-cpp wrapper name, e.g. "qwen"
   thoughtTokenBudget: undefined,    // cap reasoning tokens; 0 disables thinking
