@@ -11,6 +11,7 @@ import {
   type ChatWrapper,
 } from "node-llama-cpp";
 import type { LlamaCppProviderConfig } from "./config.js";
+import { MiniCpmChatWrapper } from "./minicpm-chat-wrapper.js";
 import { QwenXmlChatWrapper } from "./qwen-xml-chat-wrapper.js";
 import { SlotPool } from "./slot-pool.js";
 
@@ -45,6 +46,15 @@ function resolveWrapper(
     return resolveChatWrapper(model, { type: wrapperType });
   }
 
+  const template = model.fileInfo.metadata?.tokenizer?.chat_template ?? "";
+
+  // MiniCPM5's XML tool-call syntax has no node-llama-cpp wrapper at all, and its
+  // template's ChatML skeleton makes the auto resolver return ChatMLChatWrapper (whose
+  // generic function-call syntax the model was never trained on), so it must be
+  // detected before consulting the resolver.
+  if (template.includes('<function name="') && template.includes('<param name="'))
+    return new MiniCpmChatWrapper();
+
   const auto = resolveChatWrapper(model);
 
   // The auto resolver falls back to the generic Jinja wrapper when a fine-tune's
@@ -53,7 +63,6 @@ function resolveWrapper(
   // favor of the syntax they were trained on. Detect known native syntaxes in the
   // template and prefer the specialized wrapper that grammar-constrains that syntax.
   if (auto.constructor.name === "JinjaTemplateChatWrapper") {
-    const template = model.fileInfo.metadata?.tokenizer?.chat_template ?? "";
     if (
       template.includes("<tool_call>") &&
       template.includes("<function=") &&

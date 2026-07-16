@@ -21,9 +21,9 @@ node-llama-cpp contains the same machinery in TypeScript (`FunctionCallNameGramm
 prefix), and this provider routes every tool-enabled call through it:
 
 1. The resolved chat wrapper renders your tool definitions in the exact syntax the model
-   was trained on (Qwen/Hermes `<tool_call>` JSON, Qwen 3.5 XML parameters, Llama 3.x,
-   Gemma, Functionary, Harmony/GPT-OSS, DeepSeek, or a Jinja-template fallback for
-   unknown models).
+   was trained on (Qwen/Hermes `<tool_call>` JSON, Qwen 3.5 XML parameters, MiniCPM5
+   `<function name=...>` XML, Llama 3.x, Gemma, Functionary, Harmony/GPT-OSS, DeepSeek,
+   or a Jinja-template fallback for unknown models).
 2. During generation, a prefix detector watches for the wrapper's tool-call trigger.
    Text stays unconstrained; the moment a call starts, the grammar takes over.
 3. Tool calls come back as **structured results** from the engine. There is no regex, no
